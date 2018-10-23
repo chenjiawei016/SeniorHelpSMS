@@ -1,11 +1,3 @@
-<?php include('../php/server.php');
-  // if user is not logged in, they cannot access this page
-  if (empty($_SESSION['username'])) {
-    header('location: index.php');
-  }
-
-?>
-<!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
@@ -15,7 +7,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="../css/acceptService.css">
+    <link rel="stylesheet" href="acceptService.css">
     <title>Accept Service</title>
   </head>
   <body>
@@ -52,63 +44,54 @@
 <center>
   <table id="second-tb">
     <tr>
-      <th>RequestID</th>
-      <th>Service Code</th>
-      <th>Service Requested</th>
       <th>Date</th>
+      <th>Note</th>
       <th>Status</th>
-    </tr>
     <tr>
-      <td>001</td>
-      <td>A001</td>
-      <td>Cleaning</td>
-      <td>2018.Oct.5th</td>
-      <td>pending</td>
-    </tr>
-    <tr>
-      <td>002</td>
-      <td>A002</td>
-      <td>Cleaning</td>
-      <td>2018.Oct.23th</td>
-      <td>pending</td>
-    </tr>
-    <tr>
-      <td>003</td>
-      <td>A003</td>
-      <td>Cleaning</td>
-      <td>2018.Oct.20th</td>
-      <td>pending</td>
-    </tr>
-    <tr>
-      <td>004</td>
-      <td>A004</td>
-      <td>Cleaning</td>
-      <td>2018.Oct.19th</td>
-      <td>pending</td>
-    </tr>
+      <?php
+      $con=mysqli_connect('localhost','root','','service');
+      if(!$con){
+        echo"connection fail";
+      }
+      $requestid=$_GET['requestID'];
+      if(empty($requestid)){
+        header('Location:serviceAccept.php');
+      }else{
+
+      $query="SELECT * FROM  servicerequests WHERE requestID= $requestid";
+      $result=mysqli_query($con,$query);
+      while($row=mysqli_fetch_array($result)){
+        echo"<tr>";
+        echo"<td>".$row['date']."</td>";
+        echo"<td>".$row['notes']."</td>";
+        echo"<td>".$row['status']."</td>";
+        echo"</tr>";
+      }
+      }
+
+
+       ?>
   </table>
 </center>
-<form class="textbox" action="" method="post">
-  <center>
-    <label for="code">Request ID:
-    <input type="text" name="requestID" id="code">
-    </label>
-    <button type="submit"><a style="color:black; text-decoration:none" href="accept2.html">Submit</button>
-  </center>
-</form>
 <center>
-  <button type="back"><a style="color:black; text-decoration:none"; href="homeProvider.html">Back</button>
-</center>
-  <br>
+  <form class="comments"  method="post">
+     <textarea  name="comment" rows="5" cols="50" placeholder="What you want to say?" ><?php echo $row['comment']?></textarea>
+   <ul>
+     <li><button type="accept" name="accept" value="accept">Accept</button></li>
+     <li><input type="button" value="Back" onclick="window.location='serviceAccept.php';"></li>
+   </ul>
+   <?php
+   if(isset($_REQUEST['accept'])){
+     $comment = $_POST['comment'];
+     $sql="UPDATE servicerequests Set status ='Accepted', notes = '$comment'  WHERE requestID = $requestid";
 
-  <script type="text/javascript">
-    var table = document.getElementById('second-tb');
+     $result = mysqli_query($con,$sql);
+     header("Location:serviceAccept.php");
 
-    for(var i = 1; i < table.rows.length; i++){
-      table.rows[i].onclick=function(){
-        document.getElementById("code").value = this.cells[0].innerHTML;
-      };
-    }
-  </script>
+   }
+   $con->close();
+   ?>
+ </form>
+ </center>
   </body>
 </html>

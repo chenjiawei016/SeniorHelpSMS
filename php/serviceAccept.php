@@ -1,11 +1,3 @@
-<?php include('../php/server.php');
-  // if user is not logged in, they cannot access this page
-  if (empty($_SESSION['username'])) {
-    header('location: index.php');
-  }
-
-?>
-<!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
@@ -15,7 +7,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="../css/acceptService.css">
+    <link rel="stylesheet" href="acceptService.css">
     <title>Accept Service</title>
   </head>
   <body>
@@ -57,43 +49,35 @@
       <th>Service Requested</th>
       <th>Date</th>
       <th>Status</th>
-    </tr>
     <tr>
-      <td>001</td>
-      <td>A001</td>
-      <td>Cleaning</td>
-      <td>2018.Oct.5th</td>
-      <td>pending</td>
-    </tr>
-    <tr>
-      <td>002</td>
-      <td>A002</td>
-      <td>Cleaning</td>
-      <td>2018.Oct.23th</td>
-      <td>pending</td>
-    </tr>
-    <tr>
-      <td>003</td>
-      <td>A003</td>
-      <td>Cleaning</td>
-      <td>2018.Oct.20th</td>
-      <td>pending</td>
-    </tr>
-    <tr>
-      <td>004</td>
-      <td>A004</td>
-      <td>Cleaning</td>
-      <td>2018.Oct.19th</td>
-      <td>pending</td>
-    </tr>
+      <?php
+      //connect to database
+      $con=mysqli_connect('localhost','root','','service');
+      if(!$con){
+        echo"connection fail";
+      }
+      //get data from database
+      $query="SELECT * FROM  servicerequests WHERE status='Pending'";
+      $result=mysqli_query($con,$query);
+      while($row=mysqli_fetch_array($result)){
+        echo"<tr>";
+        echo"<td>".$row['requestID']."</td>";
+        echo"<td>".$row['code']."</td>";
+        echo"<td>".$row['serviceRequested']."</td>";
+        echo"<td>".$row['date']."</td>";
+        echo"<td>".$row['status']."</td>";
+        echo"</tr>";
+      }
+       ?>
   </table>
 </center>
-<form class="textbox" action="" method="post">
+
+<form class="textbox" action="serviceAccept2.php" method="get">
   <center>
     <label for="code">Request ID:
     <input type="text" name="requestID" id="code">
     </label>
-    <button type="submit"><a style="color:black; text-decoration:none" href="accept2.html">Submit</button>
+    <input type="submit" value="View" name="submit">
   </center>
 </form>
 <center>
@@ -109,6 +93,8 @@
         document.getElementById("code").value = this.cells[0].innerHTML;
       };
     }
+
+
   </script>
   </body>
 </html>
