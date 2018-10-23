@@ -38,14 +38,19 @@
       <div class="collapse navbar-collapse" id="dropDown">
         <ul class="nav navbar-nav navbar-left">
           <li><a href="home.php"><span class="glyphicon glyphicon-home"></span> Home</a></li>
-          <li><a href="service.php"><span class="glyphicon glyphicon-list-alt"></span> Services</a></li>
+          <?php if ($_SESSION['username']['userType'] == "serviceProvider"): ?>
+              <li><a href="serviceAccept.php"><span class="glyphicon glyphicon-list-alt"></span> Request</a></li>
+          <?php endif; ?>
+          <?php if ($_SESSION['username']['userType'] == "seniorCitizen"): ?>
+              <li><a href="service.php"><span class="glyphicon glyphicon-list-alt"></span> Services</a></li>
+          <?php endif; ?>
           <li><a href="manage.php"><span class="glyphicon glyphicon-folder-open"></span> Manage</a></li>
           <li><a href="review1.php"><span class="glyphicon glyphicon-comment"></span> Review</a></li>
         </ul>
         <!-- Login and Sign Up Components -->
         <ul class="nav navbar-nav navbar-right">
           <?php if (isset($_SESSION['username'])): ?>
-            <li><a href="#"><span class="glyphicon glyphicon-user"></span> Welcome,<?php echo $_SESSION['username']; ?></a></li>
+            <li><a href="#"><span class="glyphicon glyphicon-user"></span> Welcome,<?php echo $_SESSION['username']['username']; ?></a></li>
           <?php endif ?>
           <li><a href="index.php?logout='1'"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
         </ul>

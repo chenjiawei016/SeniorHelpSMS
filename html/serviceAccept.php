@@ -1,11 +1,13 @@
-<?php include('../php/server.php');
-  // if user is not logged in, they cannot access this page
-  if (empty($_SESSION['username'])) {
-    header('location: index.php');
-  }
+<?php include '../php/server.php';
+$con=mysqli_connect('localhost','root','','service');
+if(!$con){
+  echo"connection fail";
+}
+//get data from database
+$sql = "SELECT * FROM servicerequests INNER JOIN serviceProvider ON servicerequests.code = serviceProvider.serviceCode AND serviceProvider.providerUsername = '".$_SESSION['username']['username']."' AND status = 'Pending'";
 
+$result=mysqli_query($con,$sql);
 ?>
-<!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
@@ -33,15 +35,17 @@
       <!-- Navigation Components -->
       <div class="collapse navbar-collapse" id="dropDown">
         <ul class="nav navbar-nav navbar-left">
-          <li><a href="homeProvider.html"><span class="glyphicon glyphicon-home"></span> Home</a></li>
-          <li><a href="accept1.html"><span class="glyphicon glyphicon-list-alt"></span> Request</a></li>
-          <li><a href="manageForProvider.html"><span class="glyphicon glyphicon-folder-open"></span> Manage</a></li>
-          <li><a href="reviewForProvider.html"><span class="glyphicon glyphicon-comment"></span> Review</a></li>
+          <li><a href="homeProvider.php"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+          <li><a href="serviceAccept.php"><span class="glyphicon glyphicon-list-alt"></span> Request</a></li>
+          <li><a href="manage.php"><span class="glyphicon glyphicon-folder-open"></span> Manage</a></li>
+          <li><a href="review1.php"><span class="glyphicon glyphicon-comment"></span> Review</a></li>
         </ul>
         <!-- Login and Sign Up Components -->
         <ul class="nav navbar-nav navbar-right">
-          <li><a href="signup.html"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-          <li><a href="login.html"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+          <?php if (isset($_SESSION['username'])): ?>
+            <li><a href="#"><span class="glyphicon glyphicon-user"></span> Welcome,<?php echo $_SESSION['username']['username']; ?></a></li>
+          <?php endif ?>
+          <li><a href="index.php"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
         </ul>
       </div>
     </div>
@@ -57,43 +61,33 @@
       <th>Service Requested</th>
       <th>Date</th>
       <th>Status</th>
-    </tr>
     <tr>
-      <td>001</td>
-      <td>A001</td>
-      <td>Cleaning</td>
-      <td>2018.Oct.5th</td>
-      <td>pending</td>
-    </tr>
-    <tr>
-      <td>002</td>
-      <td>A002</td>
-      <td>Cleaning</td>
-      <td>2018.Oct.23th</td>
-      <td>pending</td>
-    </tr>
-    <tr>
-      <td>003</td>
-      <td>A003</td>
-      <td>Cleaning</td>
-      <td>2018.Oct.20th</td>
-      <td>pending</td>
-    </tr>
-    <tr>
-      <td>004</td>
-      <td>A004</td>
-      <td>Cleaning</td>
-      <td>2018.Oct.19th</td>
-      <td>pending</td>
-    </tr>
+      <?php
+
+      //connect to database
+      if (mysqli_num_rows($result) > 0 ) {
+
+          while($row = mysqli_fetch_array($result) ){
+          echo"<tr>";
+          echo"<td>".$row['requestID']."</td>";
+          echo"<td>".$row['code']."</td>";
+          echo"<td>".$row['serviceRequested']."</td>";
+          echo"<td>".$row['date']."</td>";
+          echo"<td>".$row['status']."</td>";
+          echo"</tr>";
+        }
+      }
+
+      ?>
   </table>
 </center>
-<form class="textbox" action="" method="post">
+
+<form class="textbox" action="serviceAccept2.php" method="get">
   <center>
     <label for="code">Request ID:
     <input type="text" name="requestID" id="code">
     </label>
-    <button type="submit"><a style="color:black; text-decoration:none" href="accept2.html">Submit</button>
+    <input type="submit" value="View" name="submit">
   </center>
 </form>
 <center>
@@ -109,6 +103,8 @@
         document.getElementById("code").value = this.cells[0].innerHTML;
       };
     }
+
+
   </script>
   </body>
 </html>

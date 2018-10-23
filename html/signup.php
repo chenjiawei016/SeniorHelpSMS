@@ -30,9 +30,7 @@
             <span id="username_status" style="color:red;"></span>
 
             <!-- pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="at least one number, one uppercase and one lowercase and at least 8 character" -->
-            <input class="text password" type="password" placeholder="Enter Password" name="password"
-            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-            title="at least one number, one uppercase and one lowercase and at least 8 character">
+            <input class="text password" type="password" placeholder="Enter Password" name="password">
 
             <input class="text" type="password" placeholder="Repeat Password" name="password_1">
 

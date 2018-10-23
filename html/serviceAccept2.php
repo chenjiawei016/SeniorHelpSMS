@@ -1,3 +1,8 @@
+<?php include '../php/server.php';
+if (empty($_SESSION['username'])) {
+  header('location: index.php');
+}
+?>
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
@@ -7,7 +12,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="acceptService.css">
+    <link rel="stylesheet" href="../css/acceptService.css">
     <title>Accept Service</title>
   </head>
   <body>
@@ -25,15 +30,17 @@
       <!-- Navigation Components -->
       <div class="collapse navbar-collapse" id="dropDown">
         <ul class="nav navbar-nav navbar-left">
-          <li><a href="homeProvider.html"><span class="glyphicon glyphicon-home"></span> Home</a></li>
-          <li><a href="accept1.html"><span class="glyphicon glyphicon-list-alt"></span> Request</a></li>
-          <li><a href="manageForProvider.html"><span class="glyphicon glyphicon-folder-open"></span> Manage</a></li>
-          <li><a href="reviewForProvider.html"><span class="glyphicon glyphicon-comment"></span> Review</a></li>
+          <li><a href="homeProvider.php"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+          <li><a href="serviceAccept.php"><span class="glyphicon glyphicon-list-alt"></span> Request</a></li>
+          <li><a href="manage.php"><span class="glyphicon glyphicon-folder-open"></span> Manage</a></li>
+          <li><a href="review1.php"><span class="glyphicon glyphicon-comment"></span> Review</a></li>
         </ul>
         <!-- Login and Sign Up Components -->
         <ul class="nav navbar-nav navbar-right">
-          <li><a href="signup.html"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-          <li><a href="login.html"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+          <?php if (isset($_SESSION['username'])): ?>
+            <li><a href="#"><span class="glyphicon glyphicon-user"></span> Welcome,<?php echo $_SESSION['username']['username']; ?></a></li>
+          <?php endif ?>
+          <li><a href="index.php"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
         </ul>
       </div>
     </div>
@@ -81,13 +88,14 @@
      <li><input type="button" value="Back" onclick="window.location='serviceAccept.php';"></li>
    </ul>
    <?php
+   $_SESSION['username'];
    if(isset($_REQUEST['accept'])){
      $comment = $_POST['comment'];
-     $sql="UPDATE servicerequests Set status ='Accepted', notes = '$comment'  WHERE requestID = $requestid";
+     $username1 = $_SESSION['username']['username'];
+     $sql="UPDATE servicerequests Set status ='Accepted', notes = '$comment', providerUsername = '$username1'  WHERE requestID = $requestid";
 
      $result = mysqli_query($con,$sql);
      header("Location:serviceAccept.php");
-
    }
    $con->close();
    ?>

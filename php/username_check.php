@@ -3,7 +3,7 @@
 $servername = "localhost";
 $username = "root";
 $serverPassword = "";
-$dbname = "seniorHelp";
+$dbname = "service";
 $con = mysqli_connect($servername, $username, $serverPassword, $dbname);
 
 if (isset($_POST['username'])) {
@@ -15,6 +15,7 @@ if (isset($_POST['username'])) {
       echo "Username doesn't exist";
       exit;
     } else {
+
       echo "Username already exists";
       exit;
     }

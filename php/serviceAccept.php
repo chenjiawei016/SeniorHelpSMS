@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="acceptService.css">
+    <link rel="stylesheet" href="../css/acceptService.css">
     <title>Accept Service</title>
   </head>
   <body>
@@ -25,15 +25,15 @@
       <!-- Navigation Components -->
       <div class="collapse navbar-collapse" id="dropDown">
         <ul class="nav navbar-nav navbar-left">
-          <li><a href="homeProvider.html"><span class="glyphicon glyphicon-home"></span> Home</a></li>
-          <li><a href="accept1.html"><span class="glyphicon glyphicon-list-alt"></span> Request</a></li>
-          <li><a href="manageForProvider.html"><span class="glyphicon glyphicon-folder-open"></span> Manage</a></li>
-          <li><a href="reviewForProvider.html"><span class="glyphicon glyphicon-comment"></span> Review</a></li>
+          <li><a href="homeProvider.php"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+          <li><a href="accept1.php"><span class="glyphicon glyphicon-list-alt"></span> Request</a></li>
+          <li><a href="manageForProvider.php"><span class="glyphicon glyphicon-folder-open"></span> Manage</a></li>
+          <li><a href="reviewForProvider.php"><span class="glyphicon glyphicon-comment"></span> Review</a></li>
         </ul>
         <!-- Login and Sign Up Components -->
         <ul class="nav navbar-nav navbar-right">
-          <li><a href="signup.html"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-          <li><a href="login.html"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+          <li><a href="signup.php"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+          <li><a href="login.php"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
         </ul>
       </div>
     </div>

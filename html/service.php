@@ -42,7 +42,7 @@
         <!-- Login and Sign Up Components -->
         <ul class="nav navbar-nav navbar-right">
           <?php if (isset($_SESSION['username'])): ?>
-            <li><a href="#"><span class="glyphicon glyphicon-user"></span> Welcome,<?php echo $_SESSION['username']; ?></a></li>
+            <li><a href="#"><span class="glyphicon glyphicon-user"></span> Welcome,<?php echo $_SESSION['username']['username']; ?></a></li>
           <?php endif ?>
           <li><a href="index.php?logout='1'"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
         </ul>

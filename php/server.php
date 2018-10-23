@@ -13,7 +13,7 @@
   $servername = "localhost";
   $username = "root";
   $serverPassword = "";
-  $dbname = "seniorHelp";
+  $dbname = "service";
   $con = mysqli_connect($servername, $username, $serverPassword, $dbname);
 
   // if the register button is clicked
@@ -101,13 +101,19 @@
 
     if (count($errors) == 0) {
       $password = md5($password);
-      $query = "SELECT * FROM SeniorHelpUsers WHERE username = '$username' AND password";
+      $query = "SELECT * FROM SeniorHelpUsers WHERE username = '$username1' AND password = '$password'";
       $result = mysqli_query($con, $query);
-      // ALEERT ! ASK TEACHER ABOUT WHY IT SHOULD BE 0 AND NOT 1
-      if (mysqli_num_rows($result) == 0) {
-        // log user in
-        $_SESSION['username'] = $username1;
-        header('location: ../html/home.php');
+
+      if (mysqli_num_rows($result) == 1) {
+          // log user in
+          $user = mysqli_fetch_assoc($result);
+          if($user['userType'] == 'serviceProvider'){
+            $_SESSION['username'] = $user;
+            header('location: ../html/homeProvider.php');
+          } else {
+            $_SESSION['username'] = $user;
+            header('location: ../html/home.php');
+          }
       } else {
         array_push($errors, "The username or password is incorrect");
       }
