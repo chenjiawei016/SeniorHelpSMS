@@ -125,28 +125,25 @@ if (empty($_SESSION['username'])) {
      <li><input type="button" value="Back" onclick="window.location='serviceAccept.php';"></li>
    </ul>
    <?php
-   $_SESSION['username'];
    if(isset($_REQUEST['accept'])){
      $sqll="SELECT reqDate FROM servicerequests INNER JOIN serviceprovider ON serviceprovider.providerUsername = servicerequests.providerUsername AND serviceprovider.providerUsername = '".$_SESSION['username']['username']."' AND servicerequests.status = 'Accepted'";
      $result1=mysqli_query($con,$sqll);
-     while($row=mysqli_fetch_array($result1)){
-       $check=$row['reqDate'];
-       if($check==$checkDate){
-         echo '<script language="javascript">';
-         echo 'alert("You already have a request at the date")';
-         echo '</script>';
-       }else{
-         $comment = $_POST['comment'];
-         $username1 = $_SESSION['username']['username'];
-         $sql="UPDATE servicerequests Set status ='Accepted', notes = '$comment', providerUsername = '$username1'  WHERE requestID = $requestid";
-         $result = mysqli_query($con,$sql);
-         header("Location:serviceAccept.php");
-       }
+     $check=mysqli_fetch_assoc($result1);
+     if(in_array($checkDate,$check)){
+      echo '<script language="javascript">';
+      echo 'alert("You already have a request at the date")';
+      echo '</script>';
+
+      $URL = "../html/serviceAccept.php";
+      echo "<script> location.href='$URL'</script>";
+     }else{
+      $comment = $_POST['comment'];
+      $username1 = $_SESSION['username']['username'];
+      $sql="UPDATE servicerequests Set status ='Accepted', notes = '$comment', providerUsername = '$username1'  WHERE requestID = $requestid";
+      $result = mysqli_query($con,$sql);
+      header("Location:serviceAccept.php");
      }
-
    }
-
-
    $con->close();
    ?>
  </form>
