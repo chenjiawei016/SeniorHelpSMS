@@ -141,6 +141,7 @@ $result = mysqli_query($con, $sql);
           <label>Status</label>
           <select name="status" id="status" class="form-control">
             <option value="Pending">Pending</option>
+            <option value="Accepted">Accepted</option>
             <option value="Completed">Completed</option>
             <option value="Cancelled">Cancelled</option>
           </select>
@@ -176,6 +177,8 @@ if (datefield.type != "date"){
     });
   });
 }
+
+$('select > option:first').hide();
 
 // enable time widget
 $('#time').timepicker({

@@ -164,7 +164,7 @@ if (empty($_SESSION['username'])) {
         <tr>
           <?php
 
-          $sql = "SELECT * FROM servicerequests INNER JOIN seniorcitizen ON seniorcitizen.citizenUsername = servicerequests.citizenUsername AND seniorcitizen.citizenUsername = '".$_SESSION['username']['username']."' AND servicerequests.status = 'Accepted'";
+          $sql = "SELECT * FROM servicerequests INNER JOIN seniorcitizen ON seniorcitizen.citizenUsername = servicerequests.citizenUsername AND seniorcitizen.citizenUsername = '".$_SESSION['username']['username']."' AND servicerequests.status = 'Completed'";
           $result=mysqli_query($con,$sql);
           //connect to database
           if (mysqli_num_rows($result) ) {
