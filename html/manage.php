@@ -97,8 +97,6 @@ $result = mysqli_query($con, $sql);
         <?php
       }
     }
-
-
     ?>
   </table>
 </header>
