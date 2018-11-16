@@ -34,11 +34,7 @@ table {
     font-family: arial, sans-serif;
     border-collapse:collapse;
     width: 50%;
-
-
 }
-
-
 
 td, th {
     border: 1px solid #dddddd;
@@ -49,8 +45,6 @@ td, th {
 th {
     background-color: #dddddd;
 }
-
-
 
 li{
   display: inline;

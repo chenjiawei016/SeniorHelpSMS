@@ -1,3 +1,4 @@
+
 <?php include '../php/server.php';
 $con=mysqli_connect('localhost','root','','service');
 if(!$con){

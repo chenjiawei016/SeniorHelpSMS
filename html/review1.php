@@ -1,3 +1,4 @@
+
 <?php include('../php/server.php');
 $con=mysqli_connect('localhost','root','','service');
 // if user is not logged in, they cannot access this page
