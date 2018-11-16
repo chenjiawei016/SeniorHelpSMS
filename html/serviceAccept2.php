@@ -4,19 +4,19 @@ if (empty($_SESSION['username'])) {
 }
 ?>
 <html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Bootstrap Components -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="../css/acceptService.css">
-    <title>Accept Service</title>
-  </head>
-  <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
+  <!-- Bootstrap Components -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="../css/acceptService.css">
+  <title>Accept Service</title>
+</head>
+<body>
+  <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container-fluid">
       <!-- Hamburger Component after screen size decreases -->
       <div class="navbar-header">
@@ -25,7 +25,7 @@ if (empty($_SESSION['username'])) {
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="#">SeniorHelp</a>
+        <a class="navbar-brand" href="home.php">SeniorHelp</a>
       </div>
       <!-- Navigation Components -->
       <div class="collapse navbar-collapse" id="dropDown">
@@ -45,61 +45,61 @@ if (empty($_SESSION['username'])) {
       </div>
     </div>
   </nav>
-<div class="Text">
-  <center><h3>Service Requests</h3></center>
-</div>
-<center>
-  <table id="second-tb">
-    <tr>
-      <th>Date</th>
-      <th>Note</th>
-      <th>Status</th>
-    <tr>
-      <?php
-      $con=mysqli_connect('localhost','root','','service');
-      if(!$con){
-        echo"connection fail";
-      }
-      $requestid=$_GET['requestID'];
-      if(empty($requestid)){
-        header('Location:serviceAccept.php');
-      }else{
+  <div class="Text">
+    <center><h3>Service Requests</h3></center>
+  </div>
+  <center>
+    <table id="second-tb">
+      <tr>
+        <th>Date</th>
+        <th>Time</th>
+        <th>Note</th>
+        <th>Status</th>
+        <tr>
 
-      $query="SELECT * FROM  servicerequests WHERE requestID= $requestid";
-      $result=mysqli_query($con,$query);
-      while($row=mysqli_fetch_array($result)){
-        echo"<tr>";
-        echo"<td>".$row['date']."</td>";
-        echo"<td>".$row['notes']."</td>";
-        echo"<td>".$row['status']."</td>";
-        echo"</tr>";
-      }
-      }
+          <?php
+          $con = mysqli_connect('localhost','root','','service');
+          if (!$con){
+            echo"connection fail";
+          }
+          $requestid = $_GET['requestID'];
+          if (empty($requestid)){
+            header('Location:serviceAccept.php');
+          } else{
+            $query = "SELECT * FROM  servicerequests WHERE requestID= $requestid";
+            $result = mysqli_query($con,$query);
+            while ($row=mysqli_fetch_array($result)){
+              echo "<tr>";
+              echo "<td>".$row['reqDate']."</td>";
+              echo "<td>".$row['reqTime']."</td>";
+              echo "<td>".$row['notes']."</td>";
+              echo "<td>".$row['status']."</td>";
+              echo "</tr>";
+            }
+          }
+          ?>
+        </table>
+      </center>
+      <center>
+        <form class="comments"  method="post">
+          <textarea  name="comment" rows="5" cols="50" placeholder="What you want to say?" ><?php echo $row['comment']?></textarea>
+          <ul>
+            <li><button type="accept" name="accept" value="accept">Accept</button></li>
+            <li><input type="button" value="Back" onclick="window.location='serviceAccept.php';"></li>
+          </ul>
+          <?php
+          $_SESSION['username'];
+          if(isset($_REQUEST['accept'])){
+            $comment = $_POST['comment'];
+            $username1 = $_SESSION['username']['username'];
+            $sql="UPDATE servicerequests Set status ='Accepted', notes = '$comment', providerUsername = '$username1'  WHERE requestID = $requestid";
 
-
-       ?>
-  </table>
-</center>
-<center>
-  <form class="comments"  method="post">
-     <textarea  name="comment" rows="5" cols="50" placeholder="What you want to say?" ><?php echo $row['comment']?></textarea>
-   <ul>
-     <li><button type="accept" name="accept" value="accept">Accept</button></li>
-     <li><input type="button" value="Back" onclick="window.location='serviceAccept.php';"></li>
-   </ul>
-   <?php
-   $_SESSION['username'];
-   if(isset($_REQUEST['accept'])){
-     $comment = $_POST['comment'];
-     $username1 = $_SESSION['username']['username'];
-     $sql="UPDATE servicerequests Set status ='Accepted', notes = '$comment', providerUsername = '$username1'  WHERE requestID = $requestid";
-
-     $result = mysqli_query($con,$sql);
-     header("Location:serviceAccept.php");
-   }
-   $con->close();
-   ?>
- </form>
- </center>
-  </body>
-</html>
+            $result = mysqli_query($con,$sql);
+            header("Location:serviceAccept.php");
+          }
+          $con->close();
+          ?>
+        </form>
+      </center>
+    </body>
+    </html>
