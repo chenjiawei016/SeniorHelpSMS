@@ -294,8 +294,7 @@
           <ul class="nav navbar-nav navbar-left">
             <li><a href="#"><span class="glyphicon glyphicon-home"></span> Home</a></li>
             <li><a href="serviceAccept.php"><span class="glyphicon glyphicon-list-alt"></span> Request</a></li>
-            <li><a href="manage.php"><span class="glyphicon glyphicon-folder-open"></span> Manage</a></li>
-            <li><a href="review1.php"><span class="glyphicon glyphicon-comment"></span> Review</a></li>
+            <li><a href="comments.php"><span class="glyphicon glyphicon-comment"></span> Review</a></li>
           </ul>
           <!-- Login and Sign Up Components -->
           <ul class="nav navbar-nav navbar-right">
