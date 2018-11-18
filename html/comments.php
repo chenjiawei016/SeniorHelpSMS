@@ -273,7 +273,7 @@ $con=mysqli_connect('localhost','root','','service');
               <input type="hidden" id="username" value=<?php echo htmlspecialchars($username)?>>
               <label for="rating">Rating :</label>
 	  	        <div class='starrr' id='rating-student'></div> 	<br>
-    					<textarea name="comment_text"id="comment_text" class="form-control" cols="30" rows="3"></textarea>
+    					<textarea name="comment_text"id="comment_text" class="form-control" cols="30" rows="3" required></textarea>
     					<input type="button" class="btn btn-primary btn-sm pull-right" value="Submit comment"name="submit_comment" id="submit" onclick="setTimeout(function(){window.location.reload();},2)">
 
              </form>

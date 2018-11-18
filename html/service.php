@@ -268,6 +268,10 @@ $(window).resize(function() {
     setModalMaxHeight($('.modal.in'));
   }
 });
+
+if ( window.history.replaceState ) {
+        window.historys.replaceState( null, null, window.location.href );
+    }
 </script>
 </body>
 </html>
